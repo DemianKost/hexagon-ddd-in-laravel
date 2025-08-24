@@ -3,14 +3,16 @@
 namespace Src\Agenda\User\Infastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Src\Agenda\User\Domain\Model\User;
 use Src\Agenda\User\Infastructure\EloquentModels\Casts\PasswordCast;
+use Src\Agenda\Workspace\Infastructure\EloquentModels\WorkspaceEloquentModel;
 
 class UserEloquentModel extends Authenticatable
 {
     use Notifiable;
+    use HasFactory;
 
     protected $table = 'users';
 
@@ -41,4 +43,15 @@ class UserEloquentModel extends Authenticatable
         'is_admin' => 'boolean',
         'password' => PasswordCast::class,
     ];
+
+    /**
+     * @return HasMany<WorkspaceEloquentModel, UserEloquentModel>
+     */
+    public function workspaces(): HasMany
+    {
+        return $this->hasMany(
+            related: WorkspaceEloquentModel::class,
+            foreignKey: 'user_id',
+        );
+    }
 }

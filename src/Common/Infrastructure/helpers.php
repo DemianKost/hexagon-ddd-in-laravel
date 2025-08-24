@@ -11,6 +11,6 @@ if (! function_exists('authorize')) {
         if ($policy::{$ability}(...$arguments)) {
             return true;
         }
-        // throw new UnauthorizedUserException();
+        throw new \Exception("Unathorized user");
     }
 }
