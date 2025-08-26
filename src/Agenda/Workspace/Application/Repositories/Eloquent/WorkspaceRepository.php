@@ -3,6 +3,7 @@
 namespace Src\Agenda\Workspace\Application\Repositories\Eloquent;
 
 use Src\Agenda\Workspace\Domain\Model\Workspace;
+use Src\Agenda\Workspace\Domain\Model\Entities\Member;
 use Src\Agenda\Workspace\Application\Mappers\WorkspaceMapper;
 use Src\Agenda\Workspace\Domain\Repositories\WorkspaceRepistoryInterface;
 use Src\Agenda\Workspace\Infastructure\EloquentModels\WorkspaceEloquentModel;
@@ -40,5 +41,17 @@ class WorkspaceRepository implements WorkspaceRepistoryInterface
     {
         $workspaceEloquent = WorkspaceEloquentModel::query()->findOrFail($id);
         $workspaceEloquent->delete();
+    }
+
+    public function addMember(Member $member, string $id): void
+    {
+        $workspaceEloquent = WorkspaceEloquentModel::query()->findOrFail($id);
+        $workspaceEloquent->members()->attach($member->user_id);
+    }
+
+    public function removeMember(Member $member, string $id): void
+    {
+        $workspaceEloquent = WorkspaceEloquentModel::query()->findOrFail($id);
+        $workspaceEloquent->members()->detach($member->user_id);
     }
 }

@@ -3,6 +3,7 @@
 namespace Src\Agenda\User\Infastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -45,13 +46,13 @@ class UserEloquentModel extends Authenticatable
     ];
 
     /**
-     * @return HasMany<WorkspaceEloquentModel, UserEloquentModel>
+     * @return BelongsToMany<WorkspaceEloquentModel, UserEloquentModel, \Illuminate\Database\Eloquent\Relations\Pivot>
      */
-    public function workspaces(): HasMany
+    public function workspaces(): BelongsToMany
     {
-        return $this->hasMany(
+        return $this->belongsToMany(
             related: WorkspaceEloquentModel::class,
-            foreignKey: 'user_id',
+            foreignPivotKey: 'user_id'
         );
     }
 }

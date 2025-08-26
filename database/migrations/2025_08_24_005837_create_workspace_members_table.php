@@ -6,31 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * @return void
-     */
     public function up(): void
     {
-        Schema::create('workspaces', function (Blueprint $table) {
-            $table->id();
-
-            $table->string('name');
-            $table->boolean('is_active')->default(false);
-
+        Schema::create('workspace_members', function (Blueprint $table) {
             $table->foreignId('user_id')
                 ->index()
                 ->constrained('users')
+                ->cascadeOnDelete();
+            $table->foreignId('workspace_id')
+                ->index()
+                ->constrained('workspaces')
                 ->cascadeOnDelete();
 
             $table->timestamps();
         });
     }
 
-    /**
-     * @return void
-     */
     public function down(): void
     {
-        Schema::dropIfExists('workspaces');
+        Schema::dropIfExists('workspace_members');
     }
 };
