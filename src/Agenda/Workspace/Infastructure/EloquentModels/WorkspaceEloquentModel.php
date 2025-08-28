@@ -24,7 +24,7 @@ class WorkspaceEloquentModel extends Model
      * @var array
      */
     protected $attributes = [
-        'user_id' => auth()->user()->id,
+        'is_active' => true,
     ];
 
     /**

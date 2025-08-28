@@ -27,7 +27,7 @@ class StoreUserCommand implements CommandInterface
      */
     public function execute(): User
     {
-        authorize('store', UserPolicy::class);
+        // authorize('store', UserPolicy::class);
         if ( UserEloquentModel::query()->where('email', $this->user->email)->exists() ) {
             throw new Exception("Email is already used");
         }

@@ -7,8 +7,9 @@ use Src\Common\Domain\AggregateRoot;
 class Workspace extends AggregateRoot
 {
     public function __construct(
-        public readonly string $id = null,
+        public ?int $id = 0,
         public readonly string $name,
+        public readonly int $user_id,
         public readonly bool $is_active = true
     ) {}
 
@@ -17,6 +18,7 @@ class Workspace extends AggregateRoot
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'user_id' => $this->user_id,
             'is_active' => $this->is_active,
         ];
     }
